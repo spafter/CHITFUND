@@ -12,6 +12,7 @@ module.exports = function (router) {
     var indexmodel = new IndexModel();
     var profilemodel = new ProfileModel();
     var adminmodel = new AdminModel();
+	var db = new DB();
 
 
     router.get('/', function (req, res) {
@@ -20,8 +21,7 @@ module.exports = function (router) {
 
 
     router.get('/details', function(req, res) {
-	var db = new DB();
-	 db.getData(function(rows){
+	 db.getBuyers(function(rows){
                 var model1 = {
                         rows:rows
                 };
@@ -32,8 +32,10 @@ module.exports = function (router) {
 
 
     router.get('/admin', function(req, res) {
+	db.getDateAndTime(function(rows){	
         res.render('admin', adminmodel);
     });
+	});
 
     /**
      * Allow the users to log out
