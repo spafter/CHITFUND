@@ -1,7 +1,16 @@
 {>"layouts/master" /}
 
 {<body}
-    <h1>{@pre type="content" key="greeting"/}</h1>
-    <p>Welcome to the Administrators private club. No users allowed here.</p>
+{@if cond="'{user.type}' == 'buyer'"}
+<p> Your Next auction starts in </p>
+<div id="cntdwn"></div>
+<input type="hidden" id="datepicker"/>
+{/if}
+{@if cond="'{user.type}' == 'merchant'"}
+<p> Enter when the auction should start </p>
+<input type="text" id="datepicker"/>
+<input type="text" id="basicExample" class="time"/>
+<div id="cntdwn" style="display:none"></div>
+{/if}
 
 {/body}
