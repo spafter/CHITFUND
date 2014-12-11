@@ -1,9 +1,10 @@
 var mysql =  require('mysql');
 
 
-module.exports=function() {
+module.exports=function DB() {
 
-return function getData(callback){
+return {
+getData: function(callback){
 
 var connection =  mysql.createConnection({
         host: "localhost",
@@ -27,4 +28,5 @@ connection.connect();
 
 connection.end();
 }
+};
 };
