@@ -7,6 +7,8 @@ var IndexModel = require('../models/index'),
     auth = require('../lib/auth');
 var db = require('../DB/operations')();
 
+var fundingOptions = require('../controllers/fundingOptions');
+
 module.exports = function (router) {
 
     var indexmodel = new IndexModel();
@@ -25,7 +27,23 @@ module.exports = function (router) {
                 var model1 = {
                         rows:rows
                 };
-                res.render('table', model1);
+
+		var req = {
+			
+  "amount": {
+    "value": "10",
+    "currency": "USD"
+  },
+  "payee": {
+    "id": "cdayanand-us@paypal.com",
+    "type": "EMAIL"
+  },
+  "fee": {
+    "payer": "PAYER"
+  },
+  "payment_type": "PERSONAL"
+}
+		fundingOptions();
         });
 
     });
