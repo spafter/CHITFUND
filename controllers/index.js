@@ -5,7 +5,7 @@ var IndexModel = require('../models/index'),
     ProfileModel = require('../models/profile'),
     AdminModel = require('../models/admin'),
     auth = require('../lib/auth');
-
+var db = require('../DB/operations')();
 
 module.exports = function (router) {
 
@@ -19,8 +19,15 @@ module.exports = function (router) {
     });
 
 
-    router.get('/profile', function(req, res) {
-        res.render('profile', profilemodel);
+    router.get('/details', function(req, res) {
+
+	 db(function(rows){
+                var model1 = {
+                        rows:rows
+                };
+                res.render('table', model1);
+        });
+
     });
 
 

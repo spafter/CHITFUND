@@ -1,0 +1,25 @@
+{>"layouts/master" /}
+
+
+{<body}
+
+<style>
+table, td {
+    border: 1px solid black;
+}
+</style>
+
+<p>Here are the merchant details</p>
+
+<table id="myTable">
+
+
+{#rows}
+<tr><td>
+  {id}
+</td>
+<td>
+{email}</td></tr>
+{/rows}
+</table>
+{/body}
