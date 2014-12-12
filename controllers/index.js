@@ -5,8 +5,9 @@ var IndexModel = require('../models/index'),
     AdminModel = require('../models/admin'),
     auth = require('../lib/auth');
 var DB = require('../DB/operations');
-
+var url = require('url');
 var SendMoney  = require('../lib/SendMoney');
+var SendMoneySub  = require('../lib/SendMoneySub');
 var MassPay = require('../lib/massPay');
 
 function alphaOnly(a) {
@@ -30,10 +31,16 @@ module.exports = function (router) {
 
 
     router.get('/details', function(req, res) {
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+	var money_sent = query.money_sent;
+	console.log(money_sent);
+	var merchant = req.user.login;
 	 db.getBuyers(function(rows){
                 var model1 = {
                         rows:rows,
-			name: req.user.login
+			name: merchant,
+			money_sent: money_sent
                 };
 		res.render('table', model1);
     });
@@ -67,7 +74,7 @@ module.exports = function (router) {
 		    var final_time = hour+":"+min+":00";
 		    db.setDateAndTime(date,final_time,merchant,function(){
 		    res.redirect('/admin');
-				    
+				   
 				    });
 		    
 		    });
@@ -101,6 +108,15 @@ module.exports = function (router) {
 			    });
 		    
 		    });
+    router.post('/sendmoney1',function(req,res){
+		    var sendMoney = new SendMoneySub();
+		    var merchant = req.user.login;
+		    console.log("SHANKAR "+merchant);
+		    sendMoney.execute(merchant,function(){
+			    res.redirect('/details?money_sent=true');
+			    });
+		    
+		    });
 
     router.post('/mass_pay',function(req,res) {
 		    //var mass_pay = new MassPay();
@@ -109,3 +125,13 @@ module.exports = function (router) {
 			    });
 		    });
 };
+
+function objToString (obj) {
+	    var str = '';
+	        for (var p in obj) {
+			        if (obj.hasOwnProperty(p)) {
+					            str += p + '::' + obj[p] + '\n';
+						            }
+				    }
+		    return str;
+}
