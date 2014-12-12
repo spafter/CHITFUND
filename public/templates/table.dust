@@ -4,22 +4,28 @@
 {<body}
 
 <style>
-table, td {
+table, td ,th{
     border: 1px solid black;
 }
 </style>
 
-<p>Here are the merchant details</p>
-
-<table id="myTable">
+<p>Here are the Bidding details!</p>
 
 
-{#rows}
-<tr><td>
-  {id}
-</td>
-<td>
-{email}</td></tr>
-{/rows}
-</table>
+<div id="table_subscriber"></div>
+
+{@if cond="'{user.type}' == 'merchant'"}
+<p>Welcome Merchant</p>
+<form action="/mass_pay" method="post">
+<input type="submit" id="submit" value="MassPay" />
+</form>
+{/if}
+
+{@if cond="'{user.type}' == 'subscriber'"}
+<form action="/update_bid" method="post">
+<h5> Hi {name} Please enter a Higher bid NOW ! </h5>
+<input type="text" name="bid_amount" value="" /></br></br>
+<input type="submit" id="submit" value="submit" />
+</form>
+{/if}
 {/body}

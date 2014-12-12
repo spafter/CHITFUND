@@ -1,15 +1,18 @@
 {>"layouts/master" /}
 
 {<body}
-{@if cond="'{user.type}' == 'buyer'"}
+{@if cond="'{user.type}' == 'subscriber'"}
 <p> Your Next auction starts in </p>
 <div id="cntdwn"></div>
 <input type="hidden" id="datepicker"/>
 {/if}
 {@if cond="'{user.type}' == 'merchant'"}
 <p> Enter when the auction should start </p>
-<input type="text" id="datepicker"/>
-<input type="text" id="basicExample" class="time"/>
+<form action="/update_time" method="post">
+<input type="text" id="datepicker" name="date"/>
+<input type="text" id="basicExample" class="time" name="time"/>
+<input type="submit" value="Update Auction Time"/>
+</form>
 <div id="cntdwn" style="display:none"></div>
 {/if}
 

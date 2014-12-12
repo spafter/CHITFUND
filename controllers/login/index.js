@@ -30,7 +30,7 @@ module.exports = function (router) {
     router.post('/', function (req, res) {
 
         passport.authenticate('local', {
-            successRedirect: req.session.goingTo || '/profile',
+            successRedirect: req.session.goingTo || '/details',
             failureRedirect: '/login',
             failureFlash: true
         })(req, res);
